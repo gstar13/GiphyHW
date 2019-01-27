@@ -51,7 +51,13 @@ $(document).ready(function () {
         for (var i = 0; i < response.data.length; i++) {
           var $img = $("<img>");
           $img.addClass("gifs");
-          $img.attr("src", response.data[i].images.downsized.url);
+          var still = response.data[i].images.fixed_height_still.url;
+          $img.attr("src", still);
+          var animated = response.data[i].images.downsized.url;
+          $img.attr("data-still", still);
+          $img.attr("data-animated", animated);
+          $img.attr("data-state", "still");
+
           $("#subwrapper").append($img);
           //add jquery to display rating under each pic
           $("#subwrapper").append("Rating: " + response.data[i].rating);
@@ -69,25 +75,22 @@ $(document).ready(function () {
     
     $(".brady").on("click", clickHandler);
   })
-
+  $(document).on('click', '.gifs', function(){
+    console.log("why");
+    var state=$(this).attr('data-state');
+    console.log($(this));
+    if (state == 'still'){
+      $(this).attr('src', $(this).data('animated'));
+      $(this).attr('data-state', 'animated');
+    } else {
+      $(this).attr('src', $(this).data('still'));
+      $(this).attr('data-state', 'still');
+    }
+  
+  })
     //start fxn ends here
   })
-  ///
-  //ready fxn ends here
-
-
-
-
-//set up swap---having a hard time finding the exact image. how do i make it display the still of the same array position i??
-
-
-
-
-
-
-
-
-//swap pics
+ 
 
 
 
